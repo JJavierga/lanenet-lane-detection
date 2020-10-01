@@ -27,6 +27,8 @@ from lanenet_model import lanenet_postprocess
 from local_utils.config_utils import parse_config_utils
 from local_utils.log_util import init_logger
 
+from Overlap import Overlap_write
+
 CFG = parse_config_utils.lanenet_cfg
 LOG = init_logger.get_logger(log_file_name_prefix='lanenet_test')
 
@@ -125,7 +127,7 @@ def test_lanenet(image_path, weights_path):
             )
         t_cost = time.time() - t_start
         t_cost /= loop_times
-        LOG.info('Single imgae inference cost time: {:.5f}s'.format(t_cost))
+        LOG.info('Single image inference cost time: {:.5f}s'.format(t_cost))
 
         postprocess_result = postprocessor.postprocess(
             binary_seg_result=binary_seg_image[0],
@@ -137,7 +139,8 @@ def test_lanenet(image_path, weights_path):
         for i in range(CFG.MODEL.EMBEDDING_FEATS_DIMS):
             instance_seg_image[0][:, :, i] = minmax_scale(instance_seg_image[0][:, :, i])
         embedding_image = np.array(instance_seg_image[0], np.uint8)
-
+        '''
+        # For showing each image
         plt.figure('mask_image')
         plt.imshow(mask_image[:, :, (2, 1, 0)])
         plt.figure('src_image')
@@ -148,6 +151,9 @@ def test_lanenet(image_path, weights_path):
         plt.figure('binary_image')
         plt.imshow(binary_seg_image[0] * 255, cmap='gray')
         plt.show()
+        '''
+        # Write overlapping image
+        Overlap_write(np.expand_dims(binary_seg_image[0], axis=2) * 255, embedding_image[:,:,(0,1,2)], (image + 1)*127.5, "Result5")
 
     sess.close()
 

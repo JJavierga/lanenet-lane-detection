@@ -26,6 +26,7 @@ def init_args():
     """
     parser = argparse.ArgumentParser()
     parser.add_argument('--src_dir', type=str, help='The origin path of unzipped tusimple dataset')
+    parser.add_argument('--both', type=bool, help='For train and test (train default)')
 
     return parser.parse_args()
 
@@ -133,7 +134,7 @@ def gen_train_sample(src_dir, b_gt_image_dir, i_gt_image_dir, image_dir):
     return
 
 
-def process_tusimple_dataset(src_dir):
+def process_tusimple_dataset(src_dir, both):
     """
 
     :param src_dir:
@@ -150,11 +151,6 @@ def process_tusimple_dataset(src_dir):
 
         shutil.copyfile(json_label_path, ops.join(traing_folder_path, json_label_name))
 
-    for json_label_path in glob.glob('{:s}/test*.json'.format(src_dir)):
-        json_label_name = ops.split(json_label_path)[1]
-
-        shutil.copyfile(json_label_path, ops.join(testing_folder_path, json_label_name))
-
     gt_image_dir = ops.join(traing_folder_path, 'gt_image')
     gt_binary_dir = ops.join(traing_folder_path, 'gt_binary_image')
     gt_instance_dir = ops.join(traing_folder_path, 'gt_instance_image')
@@ -168,10 +164,31 @@ def process_tusimple_dataset(src_dir):
 
     gen_train_sample(src_dir, gt_binary_dir, gt_instance_dir, gt_image_dir)
 
+    if both==True:
+
+        for json_label_path in glob.glob('{:s}/test*.json'.format(src_dir)):
+            json_label_name = ops.split(json_label_path)[1]
+
+            shutil.copyfile(json_label_path, ops.join(testing_folder_path, json_label_name))
+
+        gt_image_dir = ops.join(testing_folder_path, 'gt_image')
+        gt_binary_dir = ops.join(testing_folder_path, 'gt_binary_image')
+        gt_instance_dir = ops.join(testing_folder_path, 'gt_instance_image')
+
+        os.makedirs(gt_image_dir, exist_ok=True)
+        os.makedirs(gt_binary_dir, exist_ok=True)
+        os.makedirs(gt_instance_dir, exist_ok=True)
+
+        for json_label_path in glob.glob('{:s}/*.json'.format(testing_folder_path)):
+            process_json_file(json_label_path, src_dir, gt_image_dir, gt_binary_dir, gt_instance_dir)
+
+        gen_train_sample(src_dir, gt_binary_dir, gt_instance_dir, gt_image_dir)
+
+
     return
 
 
 if __name__ == '__main__':
     args = init_args()
 
-    process_tusimple_dataset(args.src_dir)
+    process_tusimple_dataset(args.src_dir, args.both)
