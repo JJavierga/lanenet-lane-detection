@@ -8,6 +8,11 @@
 """
 test LaneNet model on single image
 """
+
+######
+# python tools/test_lanenet.py --weights_path ./weights/tusimple_lanenet.ckpt --image_path ./data/tusimple_test_image/3.jpg
+######
+
 import argparse
 import os.path as ops
 import time
@@ -137,6 +142,7 @@ def test_lanenet(image_path, weights_path):
         plt.imshow(mask_image[:, :, (2, 1, 0)])
         plt.figure('src_image')
         plt.imshow(image_vis[:, :, (2, 1, 0)])
+        #cv2.imwrite('./Res.jpg',image_vis[:, :, (0, 1, 2)])
         plt.figure('instance_image')
         plt.imshow(embedding_image[:, :, (2, 1, 0)])
         plt.figure('binary_image')
