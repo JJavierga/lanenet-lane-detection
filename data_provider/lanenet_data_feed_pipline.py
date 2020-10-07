@@ -18,10 +18,10 @@ import numpy as np
 import tensorflow as tf
 import loguru
 
-from local_utils.config_utils import parse_config_utils
+from local_utils.config_utils import parse_config_utils_m
 from data_provider import tf_io_pipline_tools
 
-CFG = parse_config_utils.lanenet_cfg
+CFG = parse_config_utils_m.lanenet_cfg
 LOG = loguru.logger
 
 
@@ -43,6 +43,7 @@ class LaneNetDataProducer(object):
         self._gt_image_dir = ops.join(self._dataset_dir, 'gt_image')
         self._gt_binary_image_dir = ops.join(self._dataset_dir, 'gt_binary_image')
         self._gt_instance_image_dir = ops.join(self._dataset_dir, 'gt_instance_image')
+
 
         if not self._is_source_data_complete():
             raise ValueError('Source image data is not complete, '
