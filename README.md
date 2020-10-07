@@ -18,6 +18,16 @@ it will be able to work properly in tensorflow above version 1.12. Other require
 pip3 install -r requirements.txt
 ```
 
+## Modify paths
+
+Change config folder paths and, if you want to train on a new dataset, use:
+
+```
+python mytools/train_files.py -p PATH_TO_FOLDER_WITH_GTS
+```
+
+Later, you can continue as said in 'Train model'.
+
 ## Test model
 In this repo I uploaded a model trained on tusimple lane dataset [Tusimple_Lane_Detection](http://benchmark.tusimple.ai/#/).
 The deep neural network inference part can achieve around a 50fps which is similar to the description in the paper. But
