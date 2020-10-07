@@ -37,7 +37,12 @@ class LaneNetTusimpleTrainer(object):
         self._cfg = cfg
         # define solver params and dataset
         self._train_dataset = lanenet_data_feed_pipline.LaneNetDataFeeder(flags='train')
-        self._steps_per_epoch = len(self._train_dataset)
+        self._steps_per_epoch = len(self._train_dataset) # NOT MODIFIED  self._train_dataset.__len__()
+        print('\n')
+        print('########################################')
+        print(self._steps_per_epoch)
+        print('########################################')
+        print('\n')
 
         self._model_name = '{:s}_{:s}'.format(self._cfg.MODEL.FRONT_END, self._cfg.MODEL.MODEL_NAME)
 
@@ -151,7 +156,7 @@ class LaneNetTusimpleTrainer(object):
 
         # define training op
         with tf.variable_scope(name_or_scope='train_step'):
-            if self._cfg.TRAIN.FREEZE_BN.ENABLE:
+            if self._cfg.TRAIN.FREEZE_BN.ENABLE: ### PUEDE AFECTAR AL TRANSFER LEARNING 
                 train_var_list = [
                     v for v in tf.trainable_variables() if 'beta' not in v.name and 'gamma' not in v.name
                 ]
@@ -178,6 +183,8 @@ class LaneNetTusimpleTrainer(object):
         with tf.variable_scope('loader_and_saver'):
             self._net_var = [vv for vv in tf.global_variables() if 'lr' not in vv.name]
             self._saver = tf.train.Saver(tf.global_variables(), max_to_keep=5)
+
+        #### MINE: self._saver.restore(sess=self._sess, save_path='./weights/tusimple_lanenet.ckpt')
 
         # define summary
         with tf.variable_scope('summary'):

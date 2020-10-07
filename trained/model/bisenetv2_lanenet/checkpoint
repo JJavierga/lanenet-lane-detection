@@ -1,0 +1,6 @@
+model_checkpoint_path: "/home/javier/Programming/Segmentation/LaneNet/lanenet-lane-detection/trained/model/bisenetv2_lanenet/tusimple_train_miou=nan.ckpt-5"
+all_model_checkpoint_paths: "/home/javier/Programming/Segmentation/LaneNet/lanenet-lane-detection/trained/model/bisenetv2_lanenet/tusimple_train_miou=nan.ckpt-1"
+all_model_checkpoint_paths: "/home/javier/Programming/Segmentation/LaneNet/lanenet-lane-detection/trained/model/bisenetv2_lanenet/tusimple_train_miou=nan.ckpt-2"
+all_model_checkpoint_paths: "/home/javier/Programming/Segmentation/LaneNet/lanenet-lane-detection/trained/model/bisenetv2_lanenet/tusimple_train_miou=nan.ckpt-3"
+all_model_checkpoint_paths: "/home/javier/Programming/Segmentation/LaneNet/lanenet-lane-detection/trained/model/bisenetv2_lanenet/tusimple_train_miou=nan.ckpt-4"
+all_model_checkpoint_paths: "/home/javier/Programming/Segmentation/LaneNet/lanenet-lane-detection/trained/model/bisenetv2_lanenet/tusimple_train_miou=nan.ckpt-5"
