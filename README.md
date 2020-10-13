@@ -17,6 +17,17 @@ it will be able to work properly in tensorflow above version 1.12. Other require
 ```
 pip3 install -r requirements.txt
 ```
+EYE on tf version: 1.13.1 so that it uses GPU
+
+## Modify paths
+
+Change config folder paths and, if you want to train on a new dataset, use:
+
+```
+python mytools/train_files.py -p PATH_TO_FOLDER_WITH_GTS
+```
+
+Later, you can continue as said in 'Train model'.
 
 ## Modify paths
 
@@ -93,6 +104,8 @@ Use the script here to generate the tensorflow records file
 ```
 python tools/make_tusimple_tfrecords.py 
 ```
+
+ EYE: Binary and segmentation images must be B&W and all images should have at least one power line because its absence leads to NaN training cost.
 
 #### Train model
 In my experiment the training epochs are 80010, batch size is 4, initialized learning rate is 0.001 and use polynomial 
